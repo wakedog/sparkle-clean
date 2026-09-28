@@ -57,7 +57,7 @@ gzip -9n < data/sparkle-clean.1 > "$STAGE/usr/share/man/man1/$PACKAGE.1.gz"
     echo "Upstream-Name: $PACKAGE"
     echo
     echo "Files: *"
-    echo "Copyright: 2026 Bryan"
+    echo "Copyright: 2026 wakedog"
     echo "License: MIT"
     sed -e '1,/^Permission/{/^Permission/!d}' -e 's/^$/./' -e 's/^/ /' LICENSE
 } > "$STAGE/usr/share/doc/$PACKAGE/copyright"

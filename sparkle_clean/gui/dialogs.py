@@ -72,7 +72,7 @@ def show_about(parent: Gtk.Widget) -> None:
         application_icon=APP_ID,
         version=__version__,
         developer_name="Bryan",
-        copyright="© 2026 Bryan",
+        copyright="© 2026 wakedog",
         website=HOMEPAGE,
         issue_url=HOMEPAGE + "/issues",
         license_type=Gtk.License.MIT_X11,
