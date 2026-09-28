@@ -1,0 +1,210 @@
+.TH SPARKLE-CLEAN 1 "September 2026" "sparkle-clean 1.0.0" "User Commands"
+.SH NAME
+sparkle-clean \- free up disk space safely
+.SH SYNOPSIS
+.B sparkle-clean
+.br
+.B sparkle-clean scan
+.RI [ options ]
+.br
+.B sparkle-clean clean
+.RB [ \-y ]
+.RB [ \-n ]
+.RB [ \-v ]
+.RI [ options ]
+.br
+.B sparkle-clean categories
+.RB [ \-\-json ]
+.br
+.B sparkle-clean history
+.RB [ \-\-json ]
+.SH DESCRIPTION
+.B sparkle-clean
+finds files that are safe to remove on Ubuntu and shows how much space each
+kind takes before anything is deleted.
+Run without arguments to open the desktop app.
+The commands below provide the same functionality in a terminal.
+.PP
+Scanning never changes anything.
+Cleaning always shows what will be removed and asks for confirmation first.
+System files are cleaned by a helper that runs as root through
+.BR pkexec (1),
+so you are asked for an administrator password once per cleanup.
+.SH COMMANDS
+.TP
+.B scan
+Measure every category and print what can be cleaned.
+.TP
+.B clean
+Scan, list what will be deleted, ask you to type
+.B yes
+and clean.
+Exits with status 1 if any category could not be cleaned.
+.TP
+.B categories
+List the cleanup categories, their ids and whether they are selected.
+.TP
+.B history
+List past cleanups and the space they freed.
+.SH OPTIONS
+.TP
+.BI \-\-only " IDS"
+Only use these categories (comma-separated ids).
+.TP
+.BI \-\-include " IDS"
+Add categories that are off by default, such as
+.BR browsers .
+.TP
+.BI \-\-exclude " IDS"
+Skip these categories.
+.TP
+.BI \-\-tmp\-age\-days " DAYS"
+Only remove temporary files that have not been read, written or changed for
+this many days (1\(en365).
+.TP
+.BI \-\-journal\-days " DAYS"
+Keep this many days of system journal history (1\(en365).
+.TP
+.BI \-\-log\-age\-days " DAYS"
+Only remove rotated logs older than this many days; 0 removes them regardless
+of age (0\(en365).
+.TP
+.BR \-y ", " \-\-yes
+Do not ask for confirmation
+.RB ( clean
+only).
+.TP
+.BR \-n ", " \-\-dry\-run
+Show what would be cleaned and stop
+.RB ( clean
+only).
+.TP
+.BR \-v ", " \-\-verbose
+Print the output of the system commands that run during cleanup.
+.TP
+.B \-\-json
+Print machine-readable JSON.
+.B clean \-\-json
+also needs
+.B \-\-yes
+or
+.BR \-\-dry\-run .
+.TP
+.B \-\-no\-color
+Never use colors. Colors are also off when output is not a terminal or
+.B NO_COLOR
+is set.
+.TP
+.BR \-V ", " \-\-version
+Print the version and exit.
+.PP
+Without options, the selection and limits saved in the desktop app are used.
+.SH CATEGORIES
+.SS System
+.TP
+.B apt_cache
+Downloaded package files in /var/cache/apt/archives
+.RB ( "apt-get clean" ).
+.TP
+.B orphans
+Automatically installed packages nothing depends on anymore
+.RB ( "apt-get autoremove \-\-purge" ).
+.TP
+.B snaps
+Disabled snap revisions kept after updates.
+.TP
+.B journal
+Archived system journal files older than the retention period
+.RB ( "journalctl \-\-vacuum\-time" ).
+.TP
+.B old_logs
+Rotated logs in /var/log matching *.gz, *.[0\-9] and *.old.
+.TP
+.B tmp
+Files in /tmp and /var/tmp unused for the configured number of days.
+Files that a program has open, X11 lock files, and the private folders of
+systemd services and snaps are always kept.
+.TP
+.B crash
+Crash reports in /var/crash.
+.TP
+.B flatpak
+Unused Flatpak runtimes and extensions
+.RB ( "flatpak uninstall \-\-unused" ).
+.SS Personal
+.TP
+.B trash
+Everything in your Trash.
+.TP
+.B thumbnails
+The thumbnail cache in ~/.cache/thumbnails.
+.TP
+.B browsers
+Caches of Firefox, Chrome, Chromium, Brave, Edge, Vivaldi and Opera.
+Off by default; browsers that are running are skipped.
+.TP
+.B pip
+The pip download cache in ~/.cache/pip.
+.TP
+.B npm
+The npm cache in ~/.npm/_cacache.
+.SH SAFETY
+Only caches, logs, trash, unused packages and stale temporary files are
+removed; documents and settings are never touched.
+Deletion never follows symbolic links or crosses into other filesystems.
+The privileged helper accepts only a fixed list of task names and numeric
+limits, and never runs commands or paths supplied by the caller.
+.SH FILES
+.TP
+.I ~/.config/sparkle-clean/settings.json
+Selection and limits, shared by the app and the command line.
+.TP
+.I ~/.local/state/sparkle-clean/history.jsonl
+Record of past cleanups.
+.TP
+.I ~/.local/state/sparkle-clean/logs/
+A detailed log of each cleanup, including every file removed by the helper.
+The 30 most recent logs are kept.
+.TP
+.I /usr/libexec/sparkle-clean/sparkle-clean-helper
+The privileged helper.
+.TP
+.I /usr/share/polkit-1/actions/io.github.wakedog.SparkleClean.policy
+Polkit policy that authorizes the helper.
+.SH EXIT STATUS
+.TP
+.B 0
+Success, or nothing to do.
+.TP
+.B 1
+Some categories could not be cleaned (see the log).
+.TP
+.B 2
+Invalid arguments, or confirmation was needed but not possible.
+.TP
+.B 130
+Interrupted.
+.SH EXAMPLES
+Show what can be cleaned:
+.PP
+.RS
+.B sparkle-clean scan
+.RE
+.PP
+Clean only the package cache and unused packages, without asking:
+.PP
+.RS
+.B sparkle-clean clean \-\-only apt_cache,orphans \-\-yes
+.RE
+.PP
+Report reclaimable space from a monitoring script:
+.PP
+.RS
+.B sparkle-clean scan \-\-json | jq .selected_size
+.RE
+.SH SEE ALSO
+.BR apt-get (8),
+.BR journalctl (1),
+.BR snap (8),
+.BR flatpak (1),
+.BR pkexec (1)

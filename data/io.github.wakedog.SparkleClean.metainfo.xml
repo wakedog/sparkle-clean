@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Bryan -->
+<component type="desktop-application">
+  <id>io.github.wakedog.SparkleClean</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+
+  <name>Sparkle Clean</name>
+  <summary>Free up disk space safely</summary>
+  <developer id="io.github.wakedog">
+    <name>Bryan</name>
+  </developer>
+  <url type="homepage">https://github.com/wakedog/sparkle-clean</url>
+  <url type="bugtracker">https://github.com/wakedog/sparkle-clean/issues</url>
+  <url type="vcs-browser">https://github.com/wakedog/sparkle-clean</url>
+
+  <description>
+    <p>
+      Sparkle Clean finds files that are safe to remove and shows exactly how
+      much space each kind takes before anything is deleted. You choose what
+      to clean.
+    </p>
+    <p>It can clean:</p>
+    <ul>
+      <li>The APT package cache and packages nothing needs anymore</li>
+      <li>Old snap revisions and unused Flatpak runtimes</li>
+      <li>Old system journal entries, rotated logs and crash reports</li>
+      <li>Stale temporary files that no program has open</li>
+      <li>The Trash, the thumbnail cache, and web browser, pip and npm caches</li>
+    </ul>
+    <p>
+      System files are cleaned by a small helper that can only perform a fixed
+      set of tasks and asks for your password through the standard system
+      dialog. Every cleanup is logged, and a command-line interface is included
+      for scripts and remote machines.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.wakedog.SparkleClean.desktop</launchable>
+  <provides>
+    <binary>sparkle-clean</binary>
+  </provides>
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+
+  <content_rating type="oars-1.1"/>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#a8e6f0</color>
+    <color type="primary" scheme_preference="dark">#1d3f8a</color>
+  </branding>
+
+  <keywords>
+    <keyword>cleaner</keyword>
+    <keyword>disk space</keyword>
+    <keyword>cache</keyword>
+    <keyword>junk</keyword>
+    <keyword>storage</keyword>
+  </keywords>
+
+  <releases>
+    <release version="1.0.0" date="2026-09-27">
+      <description>
+        <p>Sparkle Clean is now a desktop app.</p>
+        <ul>
+          <li>See how much space each category uses before anything is deleted, and pick what to clean</li>
+          <li>System files are cleaned by a small, restricted helper authorized through polkit</li>
+          <li>Crash reports and web browser caches can be cleaned too</li>
+          <li>Every cleanup is logged and kept in a history</li>
+          <li>A command-line interface for scripts and remote machines</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+</component>

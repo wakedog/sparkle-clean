@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Sparkle Clean
+GenericName=Disk Cleaner
+Comment=Free up disk space by removing caches, old logs and unused packages
+Keywords=clean;cleaner;cleanup;disk;space;storage;cache;junk;trash;apt;journal;logs;snap;
+Exec=sparkle-clean
+Icon=io.github.wakedog.SparkleClean
+Terminal=false
+Categories=GTK;GNOME;System;
+StartupNotify=true
+SingleMainWindow=true
+X-GNOME-UsesNotifications=true

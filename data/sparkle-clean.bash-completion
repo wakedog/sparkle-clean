@@ -1,0 +1,42 @@
+# bash completion for sparkle-clean                          -*- shell-script -*-
+
+_sparkle_clean()
+{
+    local cur prev words cword
+    _init_completion || return
+
+    local ids="apt_cache orphans snaps journal old_logs tmp crash flatpak trash thumbnails browsers pip npm"
+
+    if ((cword == 1)); then
+        COMPREPLY=($(compgen -W "scan clean categories history --help --version" -- "$cur"))
+        return
+    fi
+
+    case $prev in
+        --only | --include | --exclude)
+            local done=""
+            [[ $cur == *,* ]] && done="${cur%,*},"
+            COMPREPLY=($(compgen -P "$done" -W "$ids" -- "${cur##*,}"))
+            compopt -o nospace
+            return
+            ;;
+        --tmp-age-days | --journal-days | --log-age-days)
+            return
+            ;;
+    esac
+
+    local options="--help --no-color --json"
+    case ${words[1]} in
+        scan)
+            options+=" --only --include --exclude --tmp-age-days --journal-days --log-age-days"
+            ;;
+        clean)
+            options+=" --only --include --exclude --tmp-age-days --journal-days --log-age-days"
+            options+=" --yes --dry-run --verbose"
+            ;;
+    esac
+    COMPREPLY=($(compgen -W "$options" -- "$cur"))
+} &&
+    complete -F _sparkle_clean sparkle-clean
+
+# ex: filetype=sh

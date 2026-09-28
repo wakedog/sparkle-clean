@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="face" x1="20" y1="10" x2="108" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#52d9ea"/>
+      <stop offset="1" stop-color="#3872dd"/>
+    </linearGradient>
+    <linearGradient id="lip" x1="0" y1="96" x2="0" y2="118" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2a5ab4"/>
+      <stop offset="1" stop-color="#1d3f8a"/>
+    </linearGradient>
+    <linearGradient id="star" x1="0" y1="22" x2="0" y2="94" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffdf0"/>
+      <stop offset="0.45" stop-color="#fdeb8a"/>
+      <stop offset="1" stop-color="#f5c02f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="55" cy="58" r="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="8" y="18" width="112" height="100" rx="24" fill="url(#lip)"/>
+  <rect x="8" y="10" width="112" height="100" rx="24" fill="url(#face)"/>
+  <rect x="9" y="11" width="110" height="98" rx="23" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="2"/>
+  <circle cx="55" cy="58" r="48" fill="url(#glow)"/>
+  <path fill="#173a80" fill-opacity="0.28" d="M55 25 Q60.8 55.2 91 61 Q60.8 66.8 55 97 Q49.2 66.8 19 61 Q49.2 55.2 55 25 Z"/>
+  <path fill="url(#star)" d="M55 22 Q60.8 52.2 91 58 Q60.8 63.8 55 94 Q49.2 63.8 19 58 Q49.2 52.2 55 22 Z"/>
+  <path fill="#ffffff" d="M93 21 Q95.4 31.6 106 34 Q95.4 36.4 93 47 Q90.6 36.4 80 34 Q90.6 31.6 93 21 Z"/>
+  <path fill="#ffffff" fill-opacity="0.9" d="M96 76 Q97.5 82.5 104 84 Q97.5 85.5 96 92 Q94.5 85.5 88 84 Q94.5 82.5 96 76 Z"/>
+</svg>
